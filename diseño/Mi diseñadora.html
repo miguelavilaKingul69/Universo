@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz día de la diseñadora</title>
+    <style>
+        /* Reset de estilos */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Evita scrolls innecesarios */
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* --- PANTALLA NEGRA INICIAL --- */
+        #click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Por encima de absolutamente todo */
+            cursor: pointer;
+            transition: opacity 0.8s ease;
+        }
+
+        #click-overlay h1 {
+            font-size: 2.5em;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            animation: latido 1.5s infinite;
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        #main-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Invisible al inicio */
+            transition: opacity 1.5s ease;
+            z-index: 10;
+        }
+
+        /* VIDEO DE FONDO */
+        .background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100; /* Siempre al fondo */
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+
+        /* CONTENEDOR DE TEXTO E IMAGEN */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .feliz-ano-titulo {
+            font-size: clamp(2em, 8vw, 4em); /* Tamaño responsivo */
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #fff,
+                0 0 20px #b22222,
+                0 0 40px #b22222;
+            margin-bottom: 20px;
+            animation: flotar 2s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .main-img {
+            max-width: 60vw;
+            max-height: 40vh;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            border: 2px solid rgba(255,255,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        /* CUADRO DE TEXTO PERSONALIZADO */
+        .mensaje-cuadro {
+            background: rgba(0, 0, 0, 0.65); /* Fondo oscuro translúcido */
+            backdrop-filter: blur(8px);    /* Efecto cristalinas */
+            -webkit-backdrop-filter: blur(8px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        .mensaje-cuadro p {
+            margin: 0;
+            font-size: 1.2em;
+            line-height: 1.6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="click-overlay">
+        <h1>Clickea mi amor</h1>
+        <p>Para ver la sorpresa</p>
+    </div>
+
+    <div id="main-content">
+        <video class="background-video" id="myVideo" loop playsinline>
+            <source src="https://www.dropbox.com/scl/fi/f72an7pdhovlu3a9wv9he/2.mp4?rlkey=e1d8zbijx9a74jl9d6lch9w8j&st=nkgmlwl5&raw=1" type="video/mp4">
+        </video>
+        
+        <div class="container">
+            <div class="feliz-ano-titulo">¡Feliz dia a la mejor diseñadora 🖤!</div>
+            
+            <img class="main-img" src="https://i.pinimg.com/736x/fe/b7/4d/feb74d2145b51c5c60a23bdbb865e760.jpg" alt="Imagen de celebración" />
+
+            <div class="mensaje-cuadro">
+                <p>
+                    "Que tengas un feliz día mi diseñadora preciosa, Sigue mostrando ese estilo único y hermoso que refleja el 
+                    arte que la misma diseñadora es, demuestra que tu arte habla de ti, de tu esencia tan única y perfecta. 
+                    Te amo, mi diseñadora preciosa. 🖤"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('click-overlay');
+        const content = document.getElementById('main-content');
+        const video = document.getElementById('myVideo');
+
+        overlay.addEventListener('click', () => {
+            // 1. Iniciamos la música y el video
+            video.play().catch(error => console.log("Error al reproducir:", error));
+            
+            // 2. Transición visual
+            overlay.style.opacity = '0';
+            content.style.opacity = '1';
+
+            // 3. Limpieza del DOM tras la animación
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        });
+    </script>
+</body>
+</html>
